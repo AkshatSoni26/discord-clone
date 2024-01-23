@@ -35,6 +35,7 @@ import { ChannelType } from '@prisma/client'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { SelectValue } from '@radix-ui/react-select'
 import queryString from 'query-string'
+import { useEffect } from 'react'
 
 
 const formSchema = z.object({
@@ -51,17 +52,18 @@ const formSchema = z.object({
 })
 
 export default function CreateChannelModal() {
-    const { isOpen, onClose, type } = useModal()
+    const { isOpen, onClose, type, data } = useModal()
     const router = useRouter()
     const params = useParams()
 
     const isModalOpen = isOpen && type === 'createChannel'
+    const {channelType} = data
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
-            type: ChannelType.Text
+            type: channelType || ChannelType.Text
         },
     })
 
@@ -91,6 +93,18 @@ export default function CreateChannelModal() {
         form.reset();
         onClose();
     }
+
+
+    useEffect(
+        () => {
+            if (channelType) {
+                form.setValue("type", channelType)
+            }
+            else {
+                form.setValue("type", ChannelType.Text)
+            }
+        }, []
+    )
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>
