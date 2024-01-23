@@ -51,19 +51,19 @@ const formSchema = z.object({
     type: z.nativeEnum(ChannelType)
 })
 
-export default function CreateChannelModal() {
+export default function EditChannelModal() {
     const { isOpen, onClose, type, data } = useModal()
     const router = useRouter()
     const params = useParams()
 
-    const isModalOpen = isOpen && type === 'createChannel'
-    const {channelType} = data
+    const isModalOpen = isOpen && type === 'editChannel'
+    const {channel, server} = data
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
-            type: channelType || ChannelType.Text
+            type: channel?.type || ChannelType.Text
         },
     })
 
@@ -73,13 +73,13 @@ export default function CreateChannelModal() {
         try {
 
             const url = queryString.stringifyUrl({
-                url:'/api/channels',
+                url:`/api/channels/${channel?.id}`,
                 query: {
-                    serverId: params?.serverId
+                    serverId: server?.id
                 }
             })
 
-            await axios.post(url, values);
+            await axios.patch(url, values);
             form.reset()
             router.refresh()
             onClose();
@@ -97,13 +97,11 @@ export default function CreateChannelModal() {
 
     useEffect(
         () => {
-            if (channelType) {
-                form.setValue("type", channelType)
+            if(channel){
+                form.setValue('name', channel.name)
+                form.setValue('type', channel.type)
             }
-            else {
-                form.setValue("type", ChannelType.Text)
-            }
-        }, [form, channelType]
+        }, [form, channel]
     )
 
     return (
@@ -111,7 +109,7 @@ export default function CreateChannelModal() {
             <DialogContent className='bg-white text-black p-0 overflow-hidden'>
                 <DialogHeader className='pt-8 px-6'>
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Create Channel
+                        Edit Channel
                     </DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
