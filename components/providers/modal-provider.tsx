@@ -8,6 +8,7 @@ import MembersModal from "../modals/members-modal"
 import CreateChannelModal from "../modals/create-channel-modal"
 import LeaveModal from "../modals/leave-modal"
 import DeleteModal from "../modals/delete-modal"
+import DeleteChannel from "../modals/delete-channel"
 
 
 export const ModalProvider = () => {
@@ -33,6 +34,7 @@ export const ModalProvider = () => {
             <CreateChannelModal />
             <LeaveModal />
             <DeleteModal />
+            <DeleteChannel />
         </>
     )
 }
