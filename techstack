@@ -7,4 +7,6 @@ uploadthing
 axios
 uuid
 
-zustandzustand
+zustand
+
+socket.io

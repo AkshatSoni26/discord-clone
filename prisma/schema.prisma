@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
 model Profile {
@@ -103,8 +103,7 @@ model Message {
   id String @id @default(uuid())
   content String @db.Text
 
-  fileUrl String @db.Text
-
+  fileUrl String? @db.Text
 
   memberId String
   member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)

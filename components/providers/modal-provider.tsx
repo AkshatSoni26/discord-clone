@@ -10,6 +10,7 @@ import LeaveModal from "../modals/leave-modal"
 import DeleteModal from "../modals/delete-modal"
 import DeleteChannel from "../modals/delete-channel"
 import EditChannelModal from "../modals/edit-channel-modal"
+import MessageFileModal from "../modals/message-file-modal"
 
 
 export const ModalProvider = () => {
@@ -37,6 +38,7 @@ export const ModalProvider = () => {
             <DeleteModal />
             <DeleteChannel />
             <EditChannelModal />
+            <MessageFileModal />
         </>
     )
 }
