@@ -17,13 +17,22 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
 
     const profile = await currentProfile();
 
-    if (!profile) {
+    console.log("inviteCode====>", params.inviteCode)
+
+    console.log('======profile======', profile)
+
+    if (!profile || profile === null) {
         return redirectToSignIn();
     }
 
-    if (!params?.inviteCode) {
+    console.log("=======before invitcode check+=======")
+
+
+    if (!params.inviteCode) {
         return redirect('/')
     }
+
+    console.log("before====existingServer====before")
 
     const existingServer = await db.server.findFirst({
         where: {
@@ -35,6 +44,8 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
             }
         }
     })
+
+    console.log("existingServer====>", existingServer)
 
     if (existingServer) {
         return redirect(`/servers/${existingServer.id}`)
