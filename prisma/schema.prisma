@@ -145,6 +145,7 @@ model DirectMessage {
 
   content String @db.Text
   fileUrl String? @db.Text
+  deleted Boolean?
 
   memberId String
   member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
