@@ -67,6 +67,14 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
     })
 
 
+    if (server) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        console.log('come under the server condition');
+        return redirect('/');
+    }
+    
+
+
     return (
         <div>
             Hello Invite friend.
